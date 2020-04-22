@@ -1,7 +1,7 @@
 <template>
 	<v-app :key="render_key">
 		<Header />
-		<Navigation />
+		<Navigation v-if="is_authenticated" />
 		<v-content>
 			<transition name="fade" mode="out-in" >
                 <router-view class="pa-2"></router-view>
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-	import { mapState } from 'vuex'
+	import { mapGetters, mapState } from 'vuex'
 	import Header from './components/Header.vue'
 	import Navigation from './components/Navigation.vue'
 
@@ -22,6 +22,9 @@
 			Navigation
 		},
 		computed: {
+			...mapGetters([
+				'is_authenticated'
+			]),
 			...mapState([
 				'render_key'
 			])
