@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-navigation-drawer v-model="navigation_drawer" clipped app>
+        <v-navigation-drawer clipped app permanent expand-on-hover>
 			<v-list nav dense>
 				<v-list-item v-for="item in navigation_items" :key="item.id" :to="{ name: item.route_name }">
 					<v-list-item-icon>
@@ -24,19 +24,25 @@ export default {
                 id: 0,
                 icon: 'mdi-home',
                 title: 'Home',
-                route_name: 'home'
+                route_name: 'Home'
             },
             {
                 id: 1,
                 icon: 'mdi-beer',
                 title: 'Beers',
-                route_name: 'beers'
+                route_name: 'Beers'
             },
             {
                 id: 2,
+                icon: 'mdi-format-list-bulleted',
+                title: 'Recipes',
+                route_name: 'Recipes'
+            },
+            {
+                id: 3,
                 icon: 'mdi-cog-outline',
-                title: 'Settings',
-                route_name: 'settings'
+                title: 'User Settings',
+                route_name: 'User Settings'
             }
         ]
     }),

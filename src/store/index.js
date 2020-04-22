@@ -1,27 +1,50 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import vuetify from '../plugins/vuetify'
+import firebase from 'firebase/app'
+import { vuexfireMutations, firestoreAction } from 'vuexfire'
+import { db } from '../db'
+
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
-		navigation_drawer: true
+		recipes: [],
+		render_key: Date.now(),
+		user: null
 	},
 	mutations: {
-		update_navigation_drawer (state, payload) {
-			if (payload !== undefined && typeof payload === "boolean") {
-                state.navigation_drawer = payload;
-                return;
-            }
-
-            state.navigation_drawer = !state.navigation_drawer
-		}
+		...vuexfireMutations
 	},
 	actions: {
-		update_navigation_drawer (store, is_open) {
-			store.commit('update_navigation_drawer', is_open);
-		}
+		bindRecipes: firestoreAction(({ bindFirestoreRef }) => {
+			return bindFirestoreRef('recipes', db.collection('recipes'))
+		}),
+		bind_user: firestoreAction(({ bindFirestoreRef }, uid) => {
+            return bindFirestoreRef('user', db.collection('users').doc(uid))
+        }),
+		init (store) {
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    this.dispatch('bind_user', user.uid).then((user) => {
+                        vuetify.framework.theme.dark = user.settings.dark_theme;
+                        store.commit('update_render_key');
+                    });
+                }
+            });
+		},
+		unbind_user: firestoreAction(({ unbindFirestoreRef }) => {
+            unbindFirestoreRef('user')
+        })
 	},
-	modules: {
+	getters: {
+		is_authenticated: state => {
+			if (state.user) {
+				return true;
+			}
+
+			return false;
+		}
 	}
 })
