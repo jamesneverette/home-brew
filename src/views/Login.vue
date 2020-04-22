@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-card class="mx-auto" style="max-width: 500px" tile>
+        <v-card class="mx-auto" style="max-width: 500px; width: 100%;" tile>
             <v-toolbar dark dense flat color="primary">
                 <v-toolbar-title>Login</v-toolbar-title>
             </v-toolbar>
