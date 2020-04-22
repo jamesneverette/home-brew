@@ -1,7 +1,8 @@
 <template>
     <div>
         <v-app-bar dense flat clipped-left clipped-right fixed app>
-            <v-toolbar-title>Home Brew</v-toolbar-title>
+            <v-icon class="mr-2">mdi-beer</v-icon>
+            <v-toolbar-title>HomeBrew</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-menu v-if="user" :close-on-content-click="false" min-width="300" offset-y>
                 <template v-slot:activator="{ on }">
