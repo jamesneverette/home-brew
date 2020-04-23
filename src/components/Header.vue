@@ -24,16 +24,13 @@
                 <v-divider />
                 <v-list>
                     <v-list-item>
-                        <v-list-item-action>
-                            <v-switch v-model="user.settings.dark_theme"  @click.prevent="update_dark_theme" label="Go Dark" />
-                        </v-list-item-action>
+                        <v-switch v-model="user.settings.dark_theme"  @click.prevent="update_dark_theme" label="Go Dark" />
                     </v-list-item>
                     <v-list-item @click="logout">
                         <v-list-item-title>Logout</v-list-item-title>
                     </v-list-item>
                 </v-list>
                 </v-menu>
-            
         </v-app-bar>
     </div>
 </template>

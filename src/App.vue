@@ -1,5 +1,5 @@
 <template>
-	<v-app :key="render_key">
+	<v-app>
 		<Header />
 		<Navigation v-if="is_authenticated" />
 		<v-content>
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-	import { mapGetters, mapState } from 'vuex'
+	import { mapActions, mapGetters } from 'vuex'
 	import Header from './components/Header.vue'
 	import Navigation from './components/Navigation.vue'
 
@@ -21,13 +21,18 @@
 			Header,
 			Navigation
 		},
+		methods: {
+			...mapActions([
+				'init'
+			])
+		},
 		computed: {
 			...mapGetters([
 				'is_authenticated'
-			]),
-			...mapState([
-				'render_key'
 			])
+		},
+		created() {
+			this.init();
 		}
 	};
 </script>

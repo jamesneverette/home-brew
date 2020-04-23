@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import router from '../router'
 import vuetify from '../plugins/vuetify'
 import firebase from 'firebase/app'
 import { vuexfireMutations, firestoreAction } from 'vuexfire'
@@ -11,7 +12,6 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		recipes: [],
-		render_key: Date.now(),
 		user: null
 	},
 	mutations: {
@@ -24,12 +24,12 @@ export default new Vuex.Store({
 		bind_user: firestoreAction(({ bindFirestoreRef }, uid) => {
             return bindFirestoreRef('user', db.collection('users').doc(uid))
         }),
-		init (store) {
+		init () {
             firebase.auth().onAuthStateChanged(user => {
                 if (user) {
                     this.dispatch('bind_user', user.uid).then((user) => {
                         vuetify.framework.theme.dark = user.settings.dark_theme;
-                        store.commit('update_render_key');
+						router.push({ name: 'Home' })
                     });
                 }
             });
